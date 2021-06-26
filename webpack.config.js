@@ -5,6 +5,20 @@ const syliusBundles = path.resolve(__dirname, 'vendor/sylius/sylius/src/Sylius/B
 const uiBundleScripts = path.resolve(syliusBundles, 'UiBundle/Resources/private/js/');
 const uiBundleResources = path.resolve(syliusBundles, 'UiBundle/Resources/private/');
 
+Encore.reset();
+Encore
+  .setOutputPath('public/bootstrap-theme')
+  .setPublicPath('/bootstrap-theme')
+  .addEntry('app', './themes/BootstrapChildTheme/assets/entry.js')
+  .disableSingleRuntimeChunk()
+  .cleanupOutputBeforeBuild()
+  .enableSassLoader()
+  .enableSourceMaps(!Encore.isProduction())
+  .enableVersioning(Encore.isProduction());
+
+const bootstrapThemeConfig = Encore.getWebpackConfig();
+bootstrapThemeConfig.name = 'bootstrapTheme';
+
 // Shop config
 Encore
   .setOutputPath('public/build/shop/')
@@ -45,3 +59,4 @@ adminConfig.externals = Object.assign({}, adminConfig.externals, { window: 'wind
 adminConfig.name = 'admin';
 
 module.exports = [shopConfig, adminConfig];
+

@@ -1,2 +1,56 @@
 sylius_paypal_webhook:
     resource: "@SyliusPayPalPlugin/Resources/config/webhook_routing.yaml"
+
+app_shop_partial_product_index_by_on_hand:
+  path: /partial/products/by-on-hand
+  methods: [GET]
+  defaults:
+      _controller: sylius.controller.product:indexAction
+      _sylius:
+          template: '@SyliusShop/Product/_horizontalList.html.twig'
+          repository:
+              method: findAllByOnHand
+              arguments: [4]
+          criteria: false
+      paginate: false
+      limit: 100
+
+sylius_admin_product_create_simple:
+    path: /products/new/simple
+    methods: [GET, POST]
+    defaults:
+        _controller: sylius.controller.product:createAction
+        _sylius:
+            section: admin
+            factory:
+                method: createDisabled # like here for example
+            template: SyliusAdminBundle:Crud:create.html.twig
+            redirect: sylius_admin_product_update
+            vars:
+                subheader: sylius.ui.manage_your_product_catalog
+                templates:
+                    form: SyliusAdminBundle:Product:_form.html.twig
+                route:
+                    name: sylius_admin_product_create_simple
+
+app_product_show_index:
+    path: /product/show
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.product::showAction
+  
+app_shop_custom_action:
+    path: /custom
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.shop.homepage::customAction
+
+index:
+    path: /index
+    methods: [GET]
+    defaults:
+        _controller: app.controller.FAQ::customAction
+    
+
+bitbag_sylius_cms_plugin:
+    resource: "@BitBagSyliusCmsPlugin/Resources/config/routing.yml"

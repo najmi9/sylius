@@ -1,0 +1,9 @@
+bitbag_sylius_cms_plugin:
+  ui:
+    cms: CMS
+    media: Media
+    block: Block
+    pages: Pages
+    sections: Section
+    faq: FAQ
+bitbag_sylius_cms_plugin.ui.cms: CMS

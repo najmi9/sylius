@@ -1,19 +1,17 @@
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en_US
+    locale: en
+    sylius.form.type.product_translation.validation_groups: [app_product]
+    sylius.form.type.product.validation_groups: [app_product]
+
+imports:
+  - { resource: "@BitBagSyliusCmsPlugin/Resources/config/services/sitemap_provider.yml" }
 
 services:
-    # Default configuration for services in *this* file
     _defaults:
-        # Automatically injects dependencies in your services
         autowire: true
 
-        # Automatically registers your services as commands, event subscribers, etc.
         autoconfigure: true
 
-        # Allows optimizing the container by removing unused services; this also means
-        # fetching services directly from the container via $container->get() won't work
         public: false
 
     _instanceof:
@@ -22,14 +20,48 @@ services:
         Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType:
             autowire: false
 
-    # Makes classes in src/ available to be used as services;
-    # this creates a service per class whose id is the fully-qualified class name
+
     App\:
         resource: '../src/*'
         exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
 
-    # Controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
+
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    App\ShippingCalculator\ParcelCalculator:
+        tags:
+            -
+                {
+                    name: sylius.shipping_calculator,
+                    calculator: "parcel",
+                    label: "Parcel",
+                    form_type: App\Form\Type\ParcelShippingCalculatorType
+                }
+
+    app.form.extension.type.customer_profile:
+        class: App\Form\Extension\CustomerProfileTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\CustomerBundle\Form\Type\CustomerProfileType }
+    
+    app.factory.product:
+        class: App\Factory\ProductFactory
+        decorates: sylius.factory.product
+        arguments: ['@app.factory.product.inner']
+        public: false
+    
+    App\Controller\ProductController:
+      autowire: false
+
+    sylius.controller.shop.homepage:
+        class: App\Controller\Shop\HomepageController
+        autowire: true
+        tags: ['controller.service_arguments']
+    
+    # app.block_event_listener.admin.layout.javascripts:
+    #     class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+    #     arguments:
+    #         - '@@App/Admin/_javascripts.html.twig'
+    #     tags:
+    #         - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.layout.javascripts, method: onBlockEvent }

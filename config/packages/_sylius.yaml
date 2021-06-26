@@ -7,6 +7,8 @@ imports:
 
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
     - { resource: "@SyliusPayPalPlugin/Resources/config/config.yaml" }
+    
+    - { resource: "@BitBagSyliusCmsPlugin/Resources/config/config.yml" }
 
 parameters:
     sylius_core.public_dir: '%kernel.project_dir%/public'
@@ -145,6 +147,9 @@ sylius_product:
         product:
             classes:
                 model: App\Entity\Product\Product
+                controller: App\Controller\ProductController
+                repository: App\Repository\ProductRepository
+
             translation:
                 classes:
                     model: App\Entity\Product\ProductTranslation
@@ -175,6 +180,7 @@ sylius_product:
             translation:
                 classes:
                     model: App\Entity\Product\ProductAssociationTypeTranslation
+
 
 sylius_promotion:
     resources:
