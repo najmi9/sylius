@@ -147,7 +147,6 @@ sylius_product:
         product:
             classes:
                 model: App\Entity\Product\Product
-                controller: App\Controller\ProductController
                 repository: App\Repository\ProductRepository
 
             translation:

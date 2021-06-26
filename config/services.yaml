@@ -51,9 +51,6 @@ services:
         arguments: ['@app.factory.product.inner']
         public: false
     
-    App\Controller\ProductController:
-      autowire: false
-
     sylius.controller.shop.homepage:
         class: App\Controller\Shop\HomepageController
         autowire: true

@@ -1,0 +1,10 @@
+/*!
+  * Native JavaScript for Bootstrap v4.0.2 (https://thednp.github.io/bootstrap.native/)
+  * Copyright 2015-2021 © dnp_theme
+  * Licensed under MIT (https://github.com/thednp/bootstrap.native/blob/master/LICENSE)
+  */
+
+/*!
+ * Font Awesome Free 5.15.3 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */

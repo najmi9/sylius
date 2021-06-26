@@ -32,12 +32,6 @@ sylius_admin_product_create_simple:
                     form: SyliusAdminBundle:Product:_form.html.twig
                 route:
                     name: sylius_admin_product_create_simple
-
-app_product_show_index:
-    path: /product/show
-    methods: [GET]
-    defaults:
-        _controller: sylius.controller.product::showAction
   
 app_shop_custom_action:
     path: /custom
