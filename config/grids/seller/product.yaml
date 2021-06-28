@@ -35,22 +35,6 @@ sylius_grid:
                     label: sylius.ui.enabled
                     options:
                         template: "@SyliusUi/Grid/Field/enabled.html.twig"
-            filters:
-                search:
-                    type: string
-                    label: sylius.ui.search
-                    options:
-                        fields: [code, translation.name]
-                enabled:
-                    type: boolean
-                    label: sylius.ui.enabled
-                channel:
-                    type: entities
-                    label: sylius.ui.channel
-                    form_options:
-                        class: "%sylius.model.channel.class%"
-                    options:
-                        field: "channels.id"
             actions:
                 main:
                     create:
