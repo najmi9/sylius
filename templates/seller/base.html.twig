@@ -1,0 +1,52 @@
+{% extends '@SyliusUi/Layout/sidebar.html.twig' %}
+
+{% block title %} Vendors{% endblock %}
+
+{% block stylesheets %}
+    {{ sylius_template_event('sylius.admin.layout.stylesheets') }}
+{% endblock %}
+
+{% block flash_messages %}
+    {% include '@SyliusAdmin/_flashes.html.twig' %}
+{% endblock %}
+
+{% block topbar %}
+    {{ sylius_template_event('sylius.admin.layout.topbar_left') }}
+
+    <div class="ui left floated dividing empty item"></div>
+
+    {{ sylius_template_event('sylius.admin.layout.topbar_middle') }}
+
+    <div class="ui right floated dividing empty item"></div>
+
+    {{ sylius_template_event('sylius.admin.layout.topbar_right') }}
+{% endblock %}
+
+{% block sidebar %}
+    <div class="item">
+        <div class="ui icon inverted transparent input">
+            <input class="sylius-admin-menu-search-input" type="text" placeholder="{{ 'sylius.ui.search'|trans }}">
+            <i class="search icon"></i>
+        </div>
+    </div>
+
+    <div class="sylius-admin-menu">
+        {% set menuItem = knp_menu_get('main', [], {'id': app.request.attributes.get('id')}) %}
+
+        {{ knp_menu_render(menuItem, {'template': '@SyliusUi/Menu/sidebar.html.twig', 'currentClass': 'active'}) }} 
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+
+{% block footer %}
+{{ 'sylius.ui.powered_by'|trans }} <a href="https://sylius.com" target="_blank">Sylius v{{ sylius_meta.version }}</a>. {{ 'sylius.ui.see_issue'|trans }}? <a href="https://github.com/Sylius/Sylius/issues" target="_blank">{{ 'sylius.ui.report_it'|trans }}!</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ sylius_template_event('sylius.admin.layout.javascripts') }}
+{% endblock %}

@@ -5,7 +5,7 @@ parameters:
 
 imports:
   - { resource: "@BitBagSyliusCmsPlugin/Resources/config/services/sitemap_provider.yml" }
-
+  - { resource: "grids/grids.yaml" }
 services:
     _defaults:
         autowire: true
@@ -50,15 +50,15 @@ services:
         decorates: sylius.factory.product
         arguments: ['@app.factory.product.inner']
         public: false
+
+    app.menu_builder:
+        class: App\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
     
-    sylius.controller.shop.homepage:
-        class: App\Controller\Shop\HomepageController
-        autowire: true
-        tags: ['controller.service_arguments']
+    App\Controller\Sellers\ProductController:
+      autowire: false
     
-    # app.block_event_listener.admin.layout.javascripts:
-    #     class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-    #     arguments:
-    #         - '@@App/Admin/_javascripts.html.twig'
-    #     tags:
-    #         - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.layout.javascripts, method: onBlockEvent }
+    App\Repository\StoreRepository:
+      public: true

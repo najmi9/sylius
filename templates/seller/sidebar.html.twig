@@ -1,0 +1,12 @@
+<div class="item">
+    <div class="ui icon inverted transparent input">
+        <input class="sylius-admin-menu-search-input" type="text" placeholder="{{ 'sylius.ui.search'|trans }}">
+        <i class="search icon"></i>
+    </div>
+</div>
+
+<div class="sylius-admin-menu">
+    {% set menuItem = knp_menu_get('main', {'template': '@SyliusUi/Menu/sidebar.html.twig', 'currentClass': 'active'}, {'context': _context}) %}
+    {{ knp_menu_render(menuItem) }}
+{#     {{ knp_menu_render('main', {'template': '@SyliusUi/Menu/sidebar.html.twig', 'currentClass': 'active'}) }}
+ #}</div>

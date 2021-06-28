@@ -4,6 +4,7 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+        - 'bootstrap_5_horizontal_layout.html.twig'
 
 services:
     _defaults:

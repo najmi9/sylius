@@ -1,0 +1,83 @@
+app_seller_products_index:
+  path: /
+  methods: [GET]
+  defaults:
+      _controller: sylius.controller.product:indexAction
+      _sylius:
+          template: 'seller/product/index.html.twig'
+          grid: app_seller_product
+          options:
+            link:
+              url: tst
+          criteria: 
+            store: $id
+      paginate: true
+      limit: 100
+
+app_seller_products_create:
+  path: /new
+  methods: [GET, POST]
+  defaults:
+      _controller: sylius.controller.product:createAction
+      _sylius:
+          permission: false
+          section: seller
+          template: "seller/product/create.html.twig"
+          redirect: app_seller_products_index
+          vars:
+              subheader: sylius.ui.manage_your_product_catalog
+              templates:
+                  form: "@SyliusAdmin/Product/_form.html.twig"
+              index:
+                route:
+                  name: app_seller_products_index
+                  parameters: 
+                    id: $id
+              route:
+                name: app_seller_products_create
+                parameters: 
+                  id: $id
+
+app_seller_product_create_simple:
+    path: /new/simple
+    methods: [GET, POST]
+    defaults:
+        _controller: sylius.controller.product:createAction
+        _sylius:
+            section: admin
+            permission: false
+            factory:
+                method: createWithVariant
+            template: "seller/product/create.html.twig"
+            redirect: sylius_admin_product_update
+            vars:
+                subheader: sylius.ui.manage_your_product_catalog
+                templates:
+                    form: "@SyliusAdmin/Product/_form.html.twig"
+                route:
+                    name: app_seller_product_create_simple
+
+app_seller_product_show:
+    path: /{productId}
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.product:showAction
+        _sylius:
+            template: "seller/product/show.html.twig"
+
+app_seller_product_update:
+    path: /{productId}/edit
+    methods: [GET, PUT, PATCH]
+    defaults:
+        _controller: sylius.controller.product:updateAction
+        _sylius:
+            section: admin
+            permission: true
+            redirect: referer
+            template: "seller/product/update.html.twig"
+            vars:
+                subheader: sylius.ui.manage_your_product_catalog
+                icon: cube
+                templates:
+                    form: "@SyliusAdmin/Product/_form.html.twig"
+                    toolbar: "@SyliusAdmin/Product/Update/_toolbar.html.twig"

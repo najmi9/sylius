@@ -1,0 +1,28 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% block title %}Seller
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div>
+            <a class="ui primary button" href="{{ path('seller_stores_new') }}">
+                <i class="heart icon"></i>
+                Created Store
+            </a>
+        </div>
+
+        {% for store in stores %}
+            <div class="ui card">
+                <div class="content">
+                    <a href="{{ path('seller_store', {id: store.id}) }}" class="ui positive button">
+                        {{ store.name }}
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <h1>No Store Created Yet.</h1>
+        {% endfor %}
+    </div>
+{% endblock %}

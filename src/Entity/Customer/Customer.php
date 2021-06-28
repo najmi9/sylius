@@ -38,4 +38,9 @@ class Customer extends BaseCustomer implements CustomerInterface
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->email;
+    }
 }

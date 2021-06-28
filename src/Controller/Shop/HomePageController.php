@@ -4,29 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller\Shop;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Twig\Environment;
+use Symfony\Component\Routing\Annotation\Route;
 
-final class HomePageController
+final class HomePageController extends AbstractController
 {
-    /** @var Environment */
-    private $twig;
-
-    public function __construct(Environment $twig)
+    /**
+     * @Route("/", name="home", methods={"GET"})
+     */
+    public function index(): Response
     {
-        $this->twig = $twig;
-    }
-
-    public function indexAction(): Response
-    {
-        return new Response($this->twig->render('@SyliusShop/Homepage/index.html.twig'));
-    }
-
-    public function customAction(Request $request): Response
-    {
-        return new Response($this->twig->render('custom/index.html.twig', [
-            'query' => $request->query->all(),
-        ]));
+        return $this->render('shop/index.html.twig', []);
     }
 }
