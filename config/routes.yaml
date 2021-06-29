@@ -3,7 +3,12 @@ sylius_paypal_webhook:
 
 seller_dashboard_product:
   resource: "routes/seller_products.yaml"
-  prefix: /seller/stores/{id}/dashboard/products
+  prefix: /seller/store/products
+
+
+seller_dashboard_order:
+  resource: "routes/seller_orders.yaml"
+  prefix: /seller/store/orders
 
 
 bitbag_sylius_cms_plugin:

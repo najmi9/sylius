@@ -1,0 +1,12 @@
+app_seller_order_index:
+  path: /
+  methods: [GET]
+  defaults:
+      _controller: sylius.controller.order:indexAction
+      _sylius:
+          template: 'seller/order/index.html.twig'
+          grid: sylius_admin_order
+          section: order
+          permission: false
+      paginate: true
+      limit: 100

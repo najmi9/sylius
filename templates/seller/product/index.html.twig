@@ -1,5 +1,12 @@
 {% extends "seller/base.html.twig" %}
 
+{% set definition = resources.definition %}
+{% set data = resources.data %}
+
+{% set header = configuration.vars.header|default(metadata.applicationName~'.ui.'~metadata.pluralName) %}
+
+{% block title %}Vendors| Products{% endblock %}
+
 {% block content %}
     {{ sylius_template_event('sylius.admin.product.index.content', _context) }}
 {% endblock %}

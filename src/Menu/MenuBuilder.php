@@ -30,7 +30,7 @@ class MenuBuilder
     }
 
 
-    private function addCatalogSubMenu(ItemInterface $menu, array $options = []): void
+    private function addCatalogSubMenu(ItemInterface $menu): void
     {
         $catalog = $menu
             ->addChild('catalog')
@@ -45,8 +45,7 @@ class MenuBuilder
 
         $catalog
             ->addChild('products', [
-                'route' => 'seller_test',
-                'routeParameters' => ['id' => $options['id']]
+                'route' => 'app_seller_product_index',
             ])
             ->setLabel('sylius.menu.admin.main.catalog.products')
             ->setLabelAttribute('icon', 'cube')
@@ -64,11 +63,11 @@ class MenuBuilder
             ->setLabelAttribute('icon', 'cubes')
         ;
 
-        $catalog
+       /*  $catalog
             ->addChild('options', ['route' => 'sylius_admin_product_option_index'])
             ->setLabel('sylius.menu.admin.main.catalog.options')
             ->setLabelAttribute('icon', 'options')
-        ;
+        ; */
 
         $catalog
             ->addChild('association_types', ['route' => 'sylius_admin_product_association_type_index'])
@@ -125,14 +124,14 @@ class MenuBuilder
         ;
 
         $sales
-            ->addChild('orders', ['route' => 'sylius_admin_order_index'])
+            ->addChild('orders', ['route' => 'app_seller_order_index'])
             ->setLabel('sylius.menu.admin.main.sales.orders')
             ->setLabelAttribute('icon', 'cart')
         ;
 
         $sales
             ->addChild('payments', ['route' => 'sylius_admin_payment_index'])
-            ->setLabel('sylius.ui.payments')
+            ->setLabel('My Payments')
             ->setLabelAttribute('icon', 'payment')
         ;
 

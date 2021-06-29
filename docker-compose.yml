@@ -23,7 +23,30 @@ services:
         #   - ./docker/mailhog/maildir:/maildir:rw,delegated
         ports:
         - "8025:8025"
+    es:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+        container_name: es-container
+        environment:
+            - xpack.security.enabled=false
+            - discovery.type=single-node
+        ports: 
+            - 9200:9200
+            - 9300:9300
+        # volumes: 
+        #     - ./search-data:/usr/share/elasticsearch/data
+
+    kibana:
+        container_name: kibana
+        image: docker.elastic.co/kibana/kibana:7.4.0
+        environment:
+            - ELASTICSEARCH_HOSTS=http://es:9200
+        ports:
+            - 5601:5601
+        depends_on:
+            - es
 
 volumes:
-  mysql-data:
-  public-media:
+    mysql-data:
+    public-media:
+    search-data:
+        driver: local

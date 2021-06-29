@@ -26,7 +26,7 @@ class DashboardController extends AbstractController
 
         $seller->setCreatedAt(new \DateTimeImmutable())
             ->setUpdatedAt(new \DateTimeImmutable())
-            ->setIsEnabled(true)
+            ->setIsEnabled(false)
             ->setUser($user)
         ;
 

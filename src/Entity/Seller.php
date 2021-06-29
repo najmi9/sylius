@@ -42,9 +42,9 @@ class Seller
     private $isEnabled;
 
     /**
-     * @ORM\OneToMany(targetEntity=Store::class, mappedBy="seller", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity=Store::class, mappedBy="seller", cascade={"persist", "remove"})
      */
-    private $stores;
+    private $store;
 
     public function __construct()
     {
@@ -104,32 +104,19 @@ class Seller
         return $this;
     }
 
-    /**
-     * @return Collection|Store[]
-     */
-    public function getStores(): Collection
+    public function getStore(): ?Store
     {
-        return $this->stores;
+        return $this->store;
     }
 
-    public function addStore(Store $store): self
+    public function setStore(Store $store): self
     {
-        if (!$this->stores->contains($store)) {
-            $this->stores[] = $store;
+        // set the owning side of the relation if necessary
+        if ($store->getSeller() !== $this) {
             $store->setSeller($this);
         }
 
-        return $this;
-    }
-
-    public function removeStore(Store $store): self
-    {
-        if ($this->stores->removeElement($store)) {
-            // set the owning side to null (unless already changed)
-            if ($store->getSeller() === $this) {
-                $store->setSeller(null);
-            }
-        }
+        $this->store = $store;
 
         return $this;
     }

@@ -4,6 +4,7 @@ sylius_grid:
             driver:
                 name: doctrine/orm
                 options:
+                    applicationName: app
                     class: "%sylius.model.product.class%"
                     repository:
                         method: createListQueryBuilder
@@ -35,6 +36,22 @@ sylius_grid:
                     label: sylius.ui.enabled
                     options:
                         template: "@SyliusUi/Grid/Field/enabled.html.twig"
+            filters:
+                search:
+                    type: string
+                    label: sylius.ui.search
+                    options:
+                        fields: [code, translation.name]
+                enabled:
+                    type: boolean
+                    label: sylius.ui.enabled
+                channel:
+                    type: entities
+                    label: sylius.ui.channel
+                    form_options:
+                        class: "%sylius.model.channel.class%"
+                    options:
+                        field: "channels.id"
             actions:
                 main:
                     create:
@@ -50,19 +67,42 @@ sylius_grid:
                                 simple:
                                     label: sylius.ui.simple_product
                                     icon: plus
-                                    route: sylius_admin_product_create_simple
+                                    route: app_seller_product_create_simple
+                                    parameters:
+                                        storeId: $storeId
+                                    
                                 configurable:
                                     label: sylius.ui.configurable_product
                                     icon: plus
-                                    route: sylius_admin_product_create
+                                    route: app_seller_product_create
+                                    parameters:
+                                        storeId: $storeId
                 item:
                     details:
                         label: sylius.ui.details
                         type: show
+                        options:
+                          link:
+                            route: app_seller_product_show
+                            parameters:
+                              id: resource.id
+                              storeId: resource.store.id
                     update:
                         type: update
+                        options:
+                          link:
+                            route: app_seller_product_update
+                            parameters:
+                              id: resource.id
+                              storeId: resource.store.id
                     delete:
                         type: delete
+                        options:
+                          link:
+                            route: app_seller_product_delete
+                            parameters:
+                              id: resource.id
+                              storeId: resource.store.id
                 subitem:
                     variants:
                         type: links
@@ -89,4 +129,10 @@ sylius_grid:
                                     visible: resource.hasOptions
                                     parameters:
                                         productId: resource.id
-
+                bulk:
+                    delete:
+                        type: delete
+                        options:
+                          link:
+                            route: sylius_admin_product_bulk_delete
+                          

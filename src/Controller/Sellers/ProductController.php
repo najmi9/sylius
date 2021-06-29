@@ -142,7 +142,7 @@ class ProductController extends ResourceController
             $newResource = $form->getData();
 
             /** @var Store|null $store */
-            $store = $this->get(StoreRepository::class)->find($request->get('id'));
+            $store = $this->getUser()->getSeller()->getStore();
 
             if (!$store) {
                throw new NotFoundHttpException("Store Not Found");

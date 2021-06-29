@@ -18,11 +18,13 @@
         "php": "^7.3",
         "bitbag/cms-plugin": "^3.0",
         "friendsofsymfony/oauth-server-bundle": ">2.0.0-alpha.0 ^2.0@dev",
+        "jolicode/elastically": "^1.2",
         "sylius/bootstrap-theme": "^0.1.2",
         "sylius/paypal-plugin": "^1.1",
         "sylius/sylius": "~1.9.0",
         "symfony/dotenv": "^4.4 || ^5.2",
         "symfony/flex": "^1.11",
+        "symfony/http-client": "^5.3",
         "symfony/webpack-encore-bundle": "^1.12"
     },
     "require-dev": {

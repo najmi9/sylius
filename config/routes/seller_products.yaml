@@ -1,4 +1,4 @@
-app_seller_products_index:
+app_seller_product_index:
   path: /
   methods: [GET]
   defaults:
@@ -6,15 +6,12 @@ app_seller_products_index:
       _sylius:
           template: 'seller/product/index.html.twig'
           grid: app_seller_product
-          options:
-            link:
-              url: tst
           criteria: 
-            store: $id
+            store: resource.store #ToDo
       paginate: true
       limit: 100
 
-app_seller_products_create:
+app_seller_product_create:
   path: /new
   methods: [GET, POST]
   defaults:
@@ -23,20 +20,16 @@ app_seller_products_create:
           permission: false
           section: seller
           template: "seller/product/create.html.twig"
-          redirect: app_seller_products_index
+          redirect: app_seller_product_index 
           vars:
               subheader: sylius.ui.manage_your_product_catalog
               templates:
                   form: "@SyliusAdmin/Product/_form.html.twig"
               index:
-                route:
-                  name: app_seller_products_index
-                  parameters: 
-                    id: $id
-              route:
-                name: app_seller_products_create
-                parameters: 
-                  id: $id
+                route: 
+                  name: app_seller_product_index
+              route: 
+                name: app_seller_product_create
 
 app_seller_product_create_simple:
     path: /new/simple
@@ -44,21 +37,24 @@ app_seller_product_create_simple:
     defaults:
         _controller: sylius.controller.product:createAction
         _sylius:
-            section: admin
+            section: seller
             permission: false
             factory:
                 method: createWithVariant
             template: "seller/product/create.html.twig"
-            redirect: sylius_admin_product_update
+            redirect: app_seller_product_index
             vars:
                 subheader: sylius.ui.manage_your_product_catalog
                 templates:
                     form: "@SyliusAdmin/Product/_form.html.twig"
-                route:
-                    name: app_seller_product_create_simple
+                route: 
+                  name: app_seller_product_create_simple
+                index:
+                  route: 
+                    name: app_seller_product_index
 
 app_seller_product_show:
-    path: /{productId}
+    path: /{id}
     methods: [GET]
     defaults:
         _controller: sylius.controller.product:showAction
@@ -66,13 +62,13 @@ app_seller_product_show:
             template: "seller/product/show.html.twig"
 
 app_seller_product_update:
-    path: /{productId}/edit
+    path: /{id}/edit
     methods: [GET, PUT, PATCH]
     defaults:
         _controller: sylius.controller.product:updateAction
         _sylius:
-            section: admin
-            permission: true
+            section: seller
+            permission: false
             redirect: referer
             template: "seller/product/update.html.twig"
             vars:
@@ -81,3 +77,23 @@ app_seller_product_update:
                 templates:
                     form: "@SyliusAdmin/Product/_form.html.twig"
                     toolbar: "@SyliusAdmin/Product/Update/_toolbar.html.twig"
+                route:
+                    name: sylius_admin_product_update
+                    parameters:
+                      id: $id
+                index:
+                  route:
+                    name: app_seller_product_index
+
+app_seller_product_delete:
+    path: /{id}/delete
+    methods: [DELETE]
+    defaults:
+        _controller: sylius.controller.product:deleteAction
+        _sylius:
+            section: seller
+            permission: true
+            redirect: referer
+            vars:
+                icon: trash
+          

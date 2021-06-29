@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Sellers;
 
 use App\Entity\Store;
-use App\Entity\User\ShopUser;
-use App\Repository\ProductRepository;
-use App\Repository\StoreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,44 +39,16 @@ class StoreController extends AbstractController
     }
 
     /**
-     * @Route("/stores", name="stores")
+     * @Route("/store", name="store")
      */
-    public function stores(): Response
+    public function dashboard(): Response
     {
-        /** @var ShopUser $user */
-        $user = $this->getUser();
-
-        $seller = $user->getSeller();
-
-        $stores = $seller->getStores();
-
-        return $this->render('seller/stores.html.twig', [
-            'stores' => $stores,
-        ]);
-    }
-
-    /**
-     * @Route("/stores/{id}/dashboard", name="store")
-     */
-    public function dashboard(string $id, StoreRepository $storeRepo, ProductRepository $productRepository): Response
-    {
-        $store = $storeRepo->find($id);
-
-        $prods = $productRepository->findBy(['store' => $store]);
-
-        dd($prods);
+        $store = $this->getUser()->getSeller()->getStore();
 
         // the dashboard of a seller store.
         return $this->render('seller/store.html.twig', [
             'store' => $store,
+
         ]);
-    }
-
-    /**
-     * @Route("/test/{id}", name="test")
-     */
-    public function test($id)
-    {
-
     }
 }

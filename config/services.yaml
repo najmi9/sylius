@@ -2,6 +2,7 @@ parameters:
     locale: en
     sylius.form.type.product_translation.validation_groups: [app_product]
     sylius.form.type.product.validation_groups: [app_product]
+    root_dir: '%kernel.project_dir%'
 
 imports:
   - { resource: "@BitBagSyliusCmsPlugin/Resources/config/services/sitemap_provider.yml" }
@@ -30,6 +31,36 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+##############Search Config#################################
+    App\Infrastructure\Search\Typesense\TypesenseClient:
+      arguments:
+        $host: '%env(resolve:TYPESENSE_URL)%'
+        $apiKey: '%env(TYPESENSE_KEY)%'
+  
+    App\Infrastructure\Search\Typesense\Command\IndexEntityCommand:
+      arguments:
+        $root_dir: '%root_dir%'
+
+    App\Infrastructure\GeoLocation\LocationInterface:
+      class: App\Infrastructure\GeoLocation\IpinfoLocation
+      arguments:
+         $token: '%env(IP_INFO_TOKEN)%'
+
+    App\Infrastructure\GeoLocation\IP2GeoLocation:
+      arguments:
+        $root_dir: '%root_dir%'
+
+    App\Infrastructure\GeoLocation\IpGeoLocation:
+      arguments:
+        $apiKey: '%env(IP_LOCATION_KEY)%'
+
+    App\Infrastructure\Search\IndexerInterface:
+      class: App\Infrastructure\Search\Elasticsearch\ElasticSearchIndexer
+
+    App\Infrastructure\Search\SearchInterface:
+      class: App\Infrastructure\Search\Elasticsearch\ElasticSearch
+##################End Search Config###########################
+
     App\ShippingCalculator\ParcelCalculator:
         tags:
             -
@@ -56,7 +87,12 @@ services:
         arguments: ["@knp_menu.factory"]
         tags:
             - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
-    
+
+    app.listener.admin.menu_builder:
+        class: App\Menu\AdminMenuListener
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems, priority: 1 }
+
     App\Controller\Sellers\ProductController:
       autowire: false
     

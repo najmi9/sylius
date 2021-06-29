@@ -41,15 +41,15 @@ class Store
     private $isEnabled;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Seller::class, inversedBy="stores")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $seller;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Seller::class, inversedBy="store", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $seller;
 
     public function __construct()
     {
@@ -81,13 +81,8 @@ class Store
 
     public function removeProduct(Product $product): self
     {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getStore() === $this) {
-                $product->setStore(null);
-            }
-        }
-
+        $this->products->removeElement($product);
+ 
         return $this;
     }
 
@@ -127,18 +122,6 @@ class Store
         return $this;
     }
 
-    public function getSeller(): ?Seller
-    {
-        return $this->seller;
-    }
-
-    public function setSeller(?Seller $seller): self
-    {
-        $this->seller = $seller;
-
-        return $this;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -147,6 +130,18 @@ class Store
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSeller(): ?Seller
+    {
+        return $this->seller;
+    }
+
+    public function setSeller(Seller $seller): self
+    {
+        $this->seller = $seller;
 
         return $this;
     }
