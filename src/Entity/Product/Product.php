@@ -17,7 +17,7 @@ class Product extends BaseProduct
 {
     /**
      * @ORM\ManyToOne(targetEntity=Store::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $store;
 

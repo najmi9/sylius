@@ -51,6 +51,11 @@ class Store
      */
     private $seller;
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $location = [];
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -142,6 +147,18 @@ class Store
     public function setSeller(Seller $seller): self
     {
         $this->seller = $seller;
+
+        return $this;
+    }
+
+    public function getLocation(): ?array
+    {
+        return $this->location;
+    }
+
+    public function setLocation(array $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

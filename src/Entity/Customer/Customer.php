@@ -20,6 +20,21 @@ class Customer extends BaseCustomer implements CustomerInterface
     private $secondaryPhoneNumber;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $publicIP;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $location = [];
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $lastProducts = [];
+
+    /**
      * Get the value of secondaryPhoneNumber
      */ 
     public function getSecondaryPhoneNumber(): ?string
@@ -42,5 +57,41 @@ class Customer extends BaseCustomer implements CustomerInterface
     public function __toString(): string
     {
         return $this->email;
+    }
+
+    public function getPublicIP(): ?string
+    {
+        return $this->publicIP;
+    }
+
+    public function setPublicIP(?string $publicIP): self
+    {
+        $this->publicIP = $publicIP;
+
+        return $this;
+    }
+
+    public function getLocation(): ?array
+    {
+        return $this->location;
+    }
+
+    public function setLocation(array $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getLastProducts(): ?array
+    {
+        return $this->lastProducts;
+    }
+
+    public function setLastProducts(array $lastProducts): self
+    {
+        $this->lastProducts = $lastProducts;
+
+        return $this;
     }
 }

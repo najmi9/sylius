@@ -21,11 +21,9 @@ services:
         Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType:
             autowire: false
 
-
     App\:
         resource: '../src/*'
         exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
-
 
     App\Controller\:
         resource: '../src/Controller'
@@ -92,9 +90,3 @@ services:
         class: App\Menu\AdminMenuListener
         tags:
             - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems, priority: 1 }
-
-    App\Controller\Sellers\ProductController:
-      autowire: false
-    
-    App\Repository\StoreRepository:
-      public: true

@@ -43,8 +43,10 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
 
     public function supports(Request $request)
     {
-        return self::LOGIN_ROUTE === $request->attributes->get('_route')
+        $support = self::LOGIN_ROUTE === $request->attributes->get('_route')
             && $request->isMethod('POST');
+
+            return false;
     }
 
     public function getCredentials(Request $request)
